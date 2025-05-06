@@ -1,5 +1,13 @@
 FROM node:20-slim
 
+# 添加构建参数声明
+ARG NEXT_PUBLIC_SUPABASE_URL
+ARG NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+# 设置环境变量
+ENV NEXT_PUBLIC_SUPABASE_URL=$NEXT_PUBLIC_SUPABASE_URL
+ENV NEXT_PUBLIC_SUPABASE_ANON_KEY=$NEXT_PUBLIC_SUPABASE_ANON_KEY
+
 WORKDIR /app
 
 # Copy package files first for better layer caching
@@ -23,6 +31,10 @@ RUN npm install
 
 # Copy the frontend code
 COPY . .
+
+# 在构建之前打印环境变量（可选，用于调试）
+RUN echo "NEXT_PUBLIC_SUPABASE_URL: $NEXT_PUBLIC_SUPABASE_URL"
+RUN echo "NEXT_PUBLIC_SUPABASE_ANON_KEY: $NEXT_PUBLIC_SUPABASE_ANON_KEY"
 
 RUN npm run build
 
