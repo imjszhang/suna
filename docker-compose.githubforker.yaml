@@ -11,6 +11,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 3
+    networks:
+      - dokploy-network
 
   backend:
     build:
@@ -29,6 +31,14 @@ services:
     depends_on:
       redis:
         condition: service_healthy
+    networks:
+      - dokploy-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend.rule=Host(`api.suna.${DOMAIN:-dokploy.localhost}`)"
+      - "traefik.http.routers.backend.entrypoints=web"
+      - "traefik.http.services.backend.loadbalancer.server.port=8000"
+      - "traefik.docker.network=dokploy-network"
 
   frontend:
     build:
@@ -43,6 +53,18 @@ services:
     command: ["npm", "run", "start"]
     depends_on:
       - backend
+    networks:
+      - dokploy-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.frontend.rule=Host(`suna.${DOMAIN:-dokploy.localhost}`)"
+      - "traefik.http.routers.frontend.entrypoints=web"
+      - "traefik.http.services.frontend.loadbalancer.server.port=3000"
+      - "traefik.docker.network=dokploy-network"
 
 volumes:
   redis-data:
+
+networks:
+  dokploy-network:
+    external: true
