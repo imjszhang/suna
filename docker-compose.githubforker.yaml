@@ -102,7 +102,6 @@ services:
       - "3000"
     volumes:
       - ./frontend/.env.local:/app/.env.local:ro
-      - ./frontend:/app:ro
     environment:
       - NODE_ENV=production
       - NEXT_PUBLIC_ENV_MODE=${NEXT_PUBLIC_ENV_MODE}
