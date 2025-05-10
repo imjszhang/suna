@@ -46,7 +46,7 @@ services:
     expose:
       - "8000"
     volumes:
-      - ./.env:./backend/.env:ro
+      - ./.env:/.env:ro
     environment:
       - ENV_MODE=${ENV_MODE:-local}
       - REDIS_HOST=${REDIS_HOST:-redis}
@@ -100,7 +100,7 @@ services:
     expose:
       - "3000"
     volumes:
-      - ./.env:./frontend/.env.local:ro
+      - ./.env:/.env.local:ro
     environment:
       - NODE_ENV=production
       - NEXT_PUBLIC_ENV_MODE=${NEXT_PUBLIC_ENV_MODE}
