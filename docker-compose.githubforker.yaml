@@ -71,8 +71,7 @@ services:
       - FIRECRAWL_URL=${FIRECRAWL_URL}
       - DAYTONA_API_KEY=${DAYTONA_API_KEY}
       - DAYTONA_SERVER_URL=${DAYTONA_SERVER_URL}
-      - DAYTONA_TARGET=${DAYTONA_TARGET}
-      
+      - DAYTONA_TARGET=${DAYTONA_TARGET}      
     depends_on:
       redis:
         condition: service_healthy
