@@ -45,6 +45,8 @@ services:
         - DAYTONA_TARGET=${DAYTONA_TARGET}        
     expose:
       - "8000"
+    volumes:
+      - ./.env:/app/.env:ro
     environment:
       - ENV_MODE=${ENV_MODE:-local}
       - REDIS_HOST=${REDIS_HOST:-redis}
@@ -97,6 +99,8 @@ services:
         - OPENAI_API_BASE=${OPENAI_API_BASE}
     expose:
       - "3000"
+    volumes:
+      - ./.env:/app/.env.local:ro
     environment:
       - NODE_ENV=production
       - NEXT_PUBLIC_ENV_MODE=${NEXT_PUBLIC_ENV_MODE}
